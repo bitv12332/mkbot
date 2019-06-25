@@ -5,6 +5,8 @@ const Token = 'NTc3MjkzMzE5MjE5MTgzNjM4.XOmoCg.pI1biNHSYMACWaPmRpDsvmK7llg';
 
 const Prefix = '?';
 
+const Prefix = "It's";
+
 require('log-timestamp');
 
 const sqlite3 = require('sqlite3').verbose();
@@ -48,6 +50,15 @@ Bot.on('ready', () => {
       case 'clear':
         
       break;  
+    };
+
+   });
+
+   Bot.on('message', msg=>{
+    let args = msg.content.substring(Prefix2.length).split(" ")
+
+    switch(args[0]){
+      
     };
 
    });
