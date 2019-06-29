@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
-const Token = '';
+const Token = 'NTc3MjkzMzE5MjE5MTgzNjM4.XOmoCg.pI1biNHSYMACWaPmRpDsvmK7llg';
 
 const Prefix = '?';
 
@@ -60,6 +60,18 @@ Bot.on('ready', () => {
               
       break;
       case 'Uninterested' :
+        member.removeRole(prospect).catch(console.error);
+        msg.channel.send('You no longer have the prospect role')
+        console.log(member + msg.author.username + ' prospect removed');
+      break;
+      case 'interested' :
+          
+        member.addRole(prospect).catch(console.error);
+        msg.channel.send('You now have the prospect role')
+        console.log(member + msg.author.username + ' prospect added');
+              
+      break;
+      case 'uninterested' :
         member.removeRole(prospect).catch(console.error);
         msg.channel.send('You no longer have the prospect role')
         console.log(member + msg.author.username + ' prospect removed');
