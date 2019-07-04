@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
-const Token = '';
+const Token = 'NTc3MjkzMzE5MjE5MTgzNjM4.XOmoCg.pI1biNHSYMACWaPmRpDsvmK7llg';
 
 const Prefix = '?';
 
@@ -11,6 +11,8 @@ require('log-timestamp');
 
 const sqlite3 = require('sqlite3').verbose();
 
+var heartbeats = require('heartbeats');
+var heart = heartbeats.createHeart(1000);
 Bot.on('ready', () => {
     console.log("Bot online");
 
@@ -19,6 +21,12 @@ Bot.on('ready', () => {
         console.error(err.message);
       }
    })
+   heart.createEvent(300, function(count, last){
+    console.log('My heart is still beating');
+  });
+  heart.createEvent(1800, function(count, last){
+    Bot.channels.get("594960312327733258").send("this is my my half hourly alive checkin")    
+  });
   });
    Bot.on('message', msg=>{
     let args = msg.content.substring(Prefix.length).split(" ")
@@ -29,7 +37,7 @@ Bot.on('ready', () => {
       if (err) {
         console.error(err.message);
       }
-      console.log('Connected to the player database.');
+      //console.log('Connected to the player database.');
       
     });
 
@@ -84,4 +92,4 @@ Bot.on('ready', () => {
     
    });
 
-Bot.login(Token);
+Bot.login(Token).catch(console.error);
