@@ -1,4 +1,6 @@
 # gooberbot
 mk management bot
 
-in the folder you put this you need another folder called db
+run with "node ." in terminal in the folder containing index.js
+
+update dependencies with "npm install" in terminal in the folder containing index.js
