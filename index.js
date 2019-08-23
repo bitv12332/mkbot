@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
-const Token = '';
+const Token = 'NTc3MjkzMzE5MjE5MTgzNjM4.XOmoCg.pI1biNHSYMACWaPmRpDsvmK7llg';
 
 const Prefix = '?';
 
@@ -42,48 +42,80 @@ Bot.on('ready', () => {
     });
 
     switch(args[0]){
-      //case 'signup':
-          //db.run(`INSERT INTO listing(name) VALUES(?)`, [msg.author.username], function(err) {
-           // if (err) {
-           //   return console.log(err.message);
-           // }
-            // get the last insert id
-           // console.log(`A row has been inserted with rowid ${this.lastID}`);
-         // });
+      case 'signup':
+          msg.guild.members.fetch;
+          db.run(`INSERT INTO listing(name) VALUES(?)`, [msg.author.username], function(err) {
+            if (err) {
+              return console.log(err.message);
+            }
+            msg.channel.send('You have sucessfully signed up (this means nothig right now as this function is still in development')
+            console.log(`A row has been inserted with rowid ${this.lastID}`);
+          });
          
-          // close the database connection
-         // db.close();
-      //break;
+           
+          db.close();
+      break;
       case 'list':
-
+                  
       break;
       case 'clear':
-        
+          db.run(`DELETE FROM listing `, function(err) {
+            if (err) {
+              return console.log(err.message);
+            }
+            msg.channel.send('You have sucessfully cleared the list')
+            console.log(`listing cleared`);
+          });
+         
+           
+          db.close();
       break;  
       case 'Interested' :
-          
+        msg.guild.members.fetch;  
         member.addRole(prospect).catch(console.error);
         msg.channel.send('You now have the prospect role')
         console.log(member + msg.author.username + ' prospect added');
               
       break;
       case 'Uninterested' :
-        member.removeRole(prospect).catch(console.error);
+      msg.guild.members.fetch;  
+      member.removeRole(prospect).catch(console.error);
         msg.channel.send('You no longer have the prospect role')
         console.log(member + msg.author.username + ' prospect removed');
       break;
       case 'interested' :
-          
+        msg.guild.members.fetch;  
         member.addRole(prospect).catch(console.error);
         msg.channel.send('You now have the prospect role')
         console.log(member + msg.author.username + ' prospect added');
               
       break;
       case 'uninterested' :
-        member.removeRole(prospect).catch(console.error);
+      msg.guild.members.fetch;  
+      member.removeRole(prospect).catch(console.error);
         msg.channel.send('You no longer have the prospect role')
         console.log(member + msg.author.username + ' prospect removed');
       break;
+      case 'connect':
+        if(msg.member.voiceChannel){
+            if (!msg.guild.voiceConnection)
+            {
+            msg.member.voiceChannel.join()
+                .then(connection =>{
+                    msg.reply('JOINED!');
+                })
+            }
+        }else{
+            msg.reply('You need to be in a voice channle to force me to join you.');
+        }
+        break;
+        case 'disconnect':
+        if(msg.guild.voiceConnection){
+            msg.guild.voiceConnection.disconnect();
+        }else{
+            msg.reply('YOU CAN NOT MAKE ME LEAVE IF I WAS NEVER THERE!')
+        }
+        break;
     };
 
    });
