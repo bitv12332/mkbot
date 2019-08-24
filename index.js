@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
-const Token = '';
+const Token = 'NTc3MjkzMzE5MjE5MTgzNjM4.XWAbOg.Wn0e-iIMTwj8oMUQm9rCLUxZdVg';
 
 const Prefix = '?';
 
@@ -44,20 +44,50 @@ Bot.on('ready', () => {
     switch(args[0]){
       case 'signup':
           msg.guild.members.fetch;
-          db.run(`INSERT INTO listing(name) VALUES(?)`, [msg.author.username], function(err) {
+          db.run(`INSERT INTO listing(name, id) VALUES(?, ?)`, [msg.author.username, msg.author.id],  function(err) {
             if (err) {
               return console.log(err.message);
             }
             msg.channel.send('You have sucessfully signed up (this means nothig right now as this function is still in development')
-            console.log(`A row has been inserted with rowid ${this.lastID}`);
+            console.log(`A row has been inserted into listing with rowid ${this.lastID}`);
           });
-         
+          
            
           db.close();
       break;
       case 'list':
                   
       break;
+      case 'register':
+          
+        let reg = "SELECT ID FROM InGameNames WHERE ID = "+ msg.author.id
+        
+        db.all(reg, function(err, player) {
+          console.log(player)
+          if (err) {
+            return console.log(err.message);
+          }
+          
+          if(player.length > 0){
+            console.log(`user `+ msg.author.username + ` allredy exists`);
+            msg.channel.send('You have allready registered your in game name with me')
+          }else{
+            console.log(`user dosent allredy exists`);
+            if(args[1]){
+              msg.guild.members.fetch;
+              db.run(`INSERT INTO InGameNames(IGN, ID) VALUES(?, ?)`, [args[1], msg.author.id],  function(err) {
+                if (err) {
+                  return console.log(err.message);
+                }
+                msg.channel.send('You have sucessfully registered your in game name with me')
+                console.log(`A row has been inserted into InGameNames with rowid ${this.lastID}`);
+              });
+          }else{
+              msg.channel.send('please include your username. An example of how to use this command is ?register NullByte')
+          } 
+          }
+        });
+        break;
       case 'clear':
           db.run(`DELETE FROM listing `, function(err) {
             if (err) {
