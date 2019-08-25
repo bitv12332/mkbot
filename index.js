@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
-const Token = '';
+const Token = "";
 
 const Prefix = '?';
 
@@ -10,6 +10,8 @@ const Prefix2 = "It's";
 require('log-timestamp');
 
 const sqlite3 = require('sqlite3').verbose();
+
+
 
 var heartbeats = require('heartbeats');
 var heart = heartbeats.createHeart(1000);
@@ -40,7 +42,12 @@ Bot.on('ready', () => {
       //console.log('Connected to the player database.');
       
     });
-
+    db.run(`INSERT INTO thingsThatWereSaid(name, id, messageContent) VALUES(?, ?, ?)`, [msg.author.username, msg.author.id, msg.content],  function(err) {
+      if (err) {
+        return console.log(err.message);
+      }
+      
+    });
     switch(args[0]){
       case 'signup':
           msg.guild.members.fetch;
@@ -145,6 +152,18 @@ Bot.on('ready', () => {
         }else{
             msg.reply('YOU CAN NOT MAKE ME LEAVE IF I WAS NEVER THERE!')
         }
+        break;
+        case "sendnewts" :
+        var pet = Math.floor(Math.random() * 10);
+            msg.reply({files:[__dirname + "/liz/" + pet + ".jpg"]})
+            
+            console.log("the lizard number was " + pet);
+        break;
+        case "showthelizard" :
+        var pet = Math.floor(Math.random() * 10);
+            msg.reply({files:[__dirname + "/liz/" + pet + ".jpg"]})
+            
+            console.log("the lizard number was " + pet);
         break;
     };
 
