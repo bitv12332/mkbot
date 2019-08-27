@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
-const Token = "";
+const Token = "NTc3MjkzMzE5MjE5MTgzNjM4.XWHCrw.qPTiY8nemKSCMVowep01SUZwqVE";
 
 const Prefix = '?';
 
@@ -33,8 +33,9 @@ Bot.on('ready', () => {
    Bot.on('message', msg=>{
     let args = msg.content.substring(Prefix.length).split(" ")
 
+    let querier = msg.guild.roles.find(r => r.name === "sql querier");
     let prospect = msg.guild.roles.find(r => r.name === "prospect");
-    let member = msg.member;
+    let member = msg.member; 
     let db = new sqlite3.Database('./db/players.db', sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
         console.error(err.message);
@@ -42,7 +43,9 @@ Bot.on('ready', () => {
       //console.log('Connected to the player database.');
       
     });
-    
+    if ( msg.author.id != 577293319219183638){
+      
+    }
     switch(args[0]){
       case 'signup':
           msg.guild.members.fetch;
@@ -85,7 +88,7 @@ Bot.on('ready', () => {
                 console.log(`A row has been inserted into InGameNames with rowid ${this.lastID}`);
               });
           }else{
-              msg.channel.send('please include your username. An example of how to use this command is ?register NullByte')
+              msg.channel.send('please include your in game username. An example of how to use this command is Null: ?register NullByte')
           } 
           }
         });
