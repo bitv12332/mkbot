@@ -42,12 +42,7 @@ Bot.on('ready', () => {
       //console.log('Connected to the player database.');
       
     });
-    db.run(`INSERT INTO thingsThatWereSaid(name, id, messageContent) VALUES(?, ?, ?)`, [msg.author.username, msg.author.id, msg.content],  function(err) {
-      if (err) {
-        return console.log(err.message);
-      }
-      
-    });
+    
     switch(args[0]){
       case 'signup':
           msg.guild.members.fetch;
