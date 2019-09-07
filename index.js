@@ -7,6 +7,9 @@ const Prefix = '?';
 
 const Prefix2 = "It's";
 
+const baseCommands=['signup','list','register','clear','interested','uninterested','connect','disconnect','sendnewts'];
+const commands=baseCommands.map(function(command){return Prefix.concat(command)});
+
 require('log-timestamp');
 
 const sqlite3 = require('sqlite3').verbose();
@@ -32,10 +35,11 @@ Bot.on('ready', () => {
   });
   });
    Bot.on('message', msg=>{
-    let args = msg.content.substring(Prefix.length).split(" ")
-
+    let args = msg.content.split(" ")
+    if(!commands.includes(args[0])) return;
     let querier = msg.guild.roles.find(r => r.name === "sql querier");
     let prospect = msg.guild.roles.find(r => r.name === "prospect");
+    let officer = msg.guild.roles.find(r => r.name === "Officers");
     let member = msg.member; 
     let db = new sqlite3.Database('./db/players.db', sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
@@ -44,11 +48,9 @@ Bot.on('ready', () => {
       //console.log('Connected to the player database.');
       
     });
-    if ( msg.author.id != 577293319219183638){
-      
-    }
+
     switch(args[0]){
-      case 'signup':
+      case '?signup':
           msg.guild.members.fetch;
           db.run(`INSERT INTO listing(name, id) VALUES(?, ?)`, [msg.author.username, msg.author.id],  function(err) {
             if (err) {
@@ -61,10 +63,10 @@ Bot.on('ready', () => {
            
           db.close();
       break;
-      case 'list':
+      case '?list':
                   
       break;
-      case 'register':
+      case '?register':
           
         let reg = "SELECT ID FROM InGameNames WHERE ID = "+ msg.author.id
         
@@ -94,7 +96,8 @@ Bot.on('ready', () => {
           }
         });
         break;
-      case 'clear':
+      case '?clear':
+          if(!(officer || querier)) return;
           db.run(`DELETE FROM listing `, function(err) {
             if (err) {
               return console.log(err.message);
@@ -106,33 +109,33 @@ Bot.on('ready', () => {
            
           db.close();
       break;  
-      case 'Interested' :
+      case '?Interested' :
         msg.guild.members.fetch;  
         member.addRole(prospect).catch(console.error);
         msg.channel.send('You now have the prospect role')
         console.log(member + msg.author.username + ' prospect added');
               
       break;
-      case 'Uninterested' :
+      case '?Uninterested' :
       msg.guild.members.fetch;  
       member.removeRole(prospect).catch(console.error);
         msg.channel.send('You no longer have the prospect role')
         console.log(member + msg.author.username + ' prospect removed');
       break;
-      case 'interested' :
+      case '?interested' :
         msg.guild.members.fetch;  
         member.addRole(prospect).catch(console.error);
         msg.channel.send('You now have the prospect role')
         console.log(member + msg.author.username + ' prospect added');
               
       break;
-      case 'uninterested' :
+      case '?uninterested' :
       msg.guild.members.fetch;  
       member.removeRole(prospect).catch(console.error);
         msg.channel.send('You no longer have the prospect role')
         console.log(member + msg.author.username + ' prospect removed');
       break;
-      case 'connect':
+      case '?connect':
         if(msg.member.voiceChannel){
             if (!msg.guild.voiceConnection)
             {
@@ -145,20 +148,20 @@ Bot.on('ready', () => {
             msg.reply('You need to be in a voice channle to force me to join you.');
         }
         break;
-        case 'disconnect':
+        case '?disconnect':
         if(msg.guild.voiceConnection){
             msg.guild.voiceConnection.disconnect();
         }else{
             msg.reply('YOU CAN NOT MAKE ME LEAVE IF I WAS NEVER THERE!')
         }
         break;
-        case "sendnewts" :
+        case "?sendnewts" :
         var pet = Math.floor(Math.random() * 10);
             msg.reply({files:[__dirname + "/liz/" + pet + ".jpg"]})
             
             console.log("the lizard number was " + pet);
         break;
-        case "showthelizard" :
+        case "?showthelizard" :
         var pet = Math.floor(Math.random() * 10);
             msg.reply({files:[__dirname + "/liz/" + pet + ".jpg"]})
             
