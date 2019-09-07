@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
-const Token = "";
+const Token = process.env.MKBOT_TOKEN;
 
 const Prefix = '?';
 
@@ -10,8 +10,6 @@ const Prefix2 = "It's";
 require('log-timestamp');
 
 const sqlite3 = require('sqlite3').verbose();
-
-
 
 var heartbeats = require('heartbeats');
 var heart = heartbeats.createHeart(1000);
