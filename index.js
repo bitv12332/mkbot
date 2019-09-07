@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const Bot = new Discord.Client();
 
 const Token = process.env.MKBOT_TOKEN;
-
+const HeartBeatChannel_ID = process.env.HEARTBEAT_CHANNEL_ID;
 const Prefix = '?';
 
 const Prefix2 = "It's";
@@ -15,8 +15,7 @@ var heartbeats = require('heartbeats');
 var heart = heartbeats.createHeart(1000);
 Bot.on('ready', () => {
     console.log("Bot online");
-
-    let db = new sqlite3.Database('./db/players.db', (err) => {
+      let db = new sqlite3.Database('./db/players.db', (err) => {
       if (err) {
         console.error(err.message);
       }
@@ -25,7 +24,11 @@ Bot.on('ready', () => {
     console.log('My heart is still beating');
   });
   heart.createEvent(1800, function(count, last){
-    Bot.channels.get("594960312327733258").send("this is my my half hourly alive checkin")    
+        var hbChannel=Bot.channels.get(HeartBeatChannel_ID);
+        if(hbChannel)
+	{
+            hbChannel.send("this is my my half hourly alive checkin")
+	}
   });
   });
    Bot.on('message', msg=>{
