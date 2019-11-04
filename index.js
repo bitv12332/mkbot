@@ -168,20 +168,47 @@ Bot.on('ready', () => {
             console.log("the lizard number was " + pet);
         break;
         case '?post' :
+        if(!(officer)) return;  
         if(args[1] === 'monday'){
-          msg.guild.members.fetch;  
-        Bot.channels.get("594960312327733258").send("@here COME ONE COME ALL COME ON DOWN FOR A MONDAY RAID! https://forms.gle/iBrpCWBNsdmm3PNK7");
-        
-        console.log(msg.author.username + ' sent the monday message');
-              
+            if (args[2] >= 0 && args[2] <= 23){
+              var mrule = new schedule.RecurrenceRule();
+              mrule.dayOfWeek = 1;
+              mrule.hour = args[2];
+              mrule.minute = 0;
+              console.log('message schedued for ' + args[2]);
+              var j = schedule.scheduleJob(mrule, function(){
+                msg.guild.members.fetch;  
+                Bot.channels.get("479411609329074176").send("@here COME ONE COME ALL COME ON DOWN FOR A MONDAY RAID! https://forms.gle/iBrpCWBNsdmm3PNK7");
+            
+              console.log('schedule sent the monday message');
+            });
+            }else{
+              msg.guild.members.fetch;  
+              Bot.channels.get("479411609329074176").send("@here COME ONE COME ALL COME ON DOWN FOR A MONDAY RAID! https://forms.gle/iBrpCWBNsdmm3PNK7");
+          
+              console.log(msg.author.username + ' sent the monday message');
+          }              
         }
         if(args[1] === 'friday'){
-          msg.guild.members.fetch;  
-        Bot.channels.get("594960312327733258").send("@here BRING YOUR DRINKS AND BE READY FOR A FRIDAY FUN RUN! https://forms.gle/iBrpCWBNsdmm3PNK7");
-      
-        console.log(msg.author.username + ' sent the friday message');
+          if (args[2] >= 0 && args[2] <= 23){
+            var frule = new schedule.RecurrenceRule();
+            frule.dayOfWeek = 5;
+            frule.hour = args[2];
+            frule.minute = 0;
+            console.log('message schedued for ' + args[2]);
+            var j = schedule.scheduleJob(frule, function(){
+              msg.guild.members.fetch;  
+              Bot.channels.get("479411609329074176").send("@here BRING YOUR DRINKS AND BE READY FOR A FRIDAY FUN RUN! https://forms.gle/iBrpCWBNsdmm3PNK7");
+            
+              console.log('schedule sent the friday message');
+            });
+          }else{
+            msg.guild.members.fetch;  
+            Bot.channels.get("479411609329074176").send("@here BRING YOUR DRINKS AND BE READY FOR A FRIDAY FUN RUN! https://forms.gle/iBrpCWBNsdmm3PNK7");
+            
+            console.log(msg.author.username + ' sent the friday message');
+          }
         }
-        break;
     };
 
    });
