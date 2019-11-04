@@ -7,7 +7,7 @@ const Prefix = '?';
 
 const Prefix2 = "It's";
 
-const baseCommands=['signup','list','register','clear','interested','uninterested','connect','disconnect','sendnewts',"monday"];
+const baseCommands=['signup','list','register','clear','interested','uninterested','connect','disconnect','sendnewts',"post"];
 const commands=baseCommands.map(function(command){return Prefix.concat(command)});
 
 require('log-timestamp');
@@ -167,14 +167,21 @@ Bot.on('ready', () => {
             
             console.log("the lizard number was " + pet);
         break;
-        case '?monday' :
-        msg.guild.members.fetch; 
-        if(!(officer || querier)) return; 
-        Bot.channels.get("479411609329074176").send("@here COME ONE COME ALL COME ON DOWN FOR A MONDAY RAID! https://forms.gle/iBrpCWBNsdmm3PNK7");
+        case '?post' :
+        if(args[1] === 'monday'){
+          msg.guild.members.fetch;  
+        Bot.channels.get("594960312327733258").send("@here COME ONE COME ALL COME ON DOWN FOR A MONDAY RAID! https://forms.gle/iBrpCWBNsdmm3PNK7");
         
         console.log(msg.author.username + ' sent the monday message');
               
-      	break;
+        }
+        if(args[1] === 'friday'){
+          msg.guild.members.fetch;  
+        Bot.channels.get("594960312327733258").send("@here BRING YOUR DRINKS AND BE READY FOR A FRIDAY FUN RUN! https://forms.gle/iBrpCWBNsdmm3PNK7");
+      
+        console.log(msg.author.username + ' sent the friday message');
+        }
+        break;
     };
 
    });
