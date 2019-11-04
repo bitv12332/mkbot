@@ -168,7 +168,8 @@ Bot.on('ready', () => {
             console.log("the lizard number was " + pet);
         break;
         case '?monday' :
-        msg.guild.members.fetch;  
+        msg.guild.members.fetch; 
+        if(!(officer || querier)) return; 
         Bot.channels.get("479411609329074176").send("@here COME ONE COME ALL COME ON DOWN FOR A MONDAY RAID! https://forms.gle/iBrpCWBNsdmm3PNK7");
         
         console.log(msg.author.username + ' sent the monday message');
