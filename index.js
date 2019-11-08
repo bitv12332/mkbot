@@ -51,9 +51,13 @@ Bot.on('ready', () => {
    Bot.on('message', msg=>{
     let args = msg.content.split(" ")
     if(!commands.includes(args[0])) return;
+    if(!msg.guild){
+      msg.reply("currently private messages are not allowed.")
+      return;
+    }
     let querier = msg.guild.roles.find(r => r.name === "sql querier");
     let prospect = msg.guild.roles.find(r => r.name === "prospect");
-    let officer = msg.guild.roles.find(r => r.name === "Officers");
+    let officer = msg.guild.roles.find(r => r.name.includes("Officer"));
     let member = msg.member;
     let db = new sqlite3.Database('./db/players.db', sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
