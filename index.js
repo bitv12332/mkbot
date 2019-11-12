@@ -50,13 +50,13 @@ Bot.on('ready', () => {
   });
    Bot.on('message', msg=>{
     let args = msg.content.split(" ")
-    if(!commands.includes(args[0])) return;
+    if(!commands.includes(args[0].toLowerCase())) return;
     if(!msg.guild){
       msg.reply("currently private messages are not allowed.")
       return;
     }
     let querier = msg.guild.roles.find(r => r.name === "sql querier");
-    let prospect = msg.guild.roles.find(r => r.name === "prospect");
+    let prospect = msg.guild.roles.find(r => r.name === "Prospects");
     let officer = msg.guild.roles.find(r => r.name.includes("Officer"));
     let member = msg.member;
     let db = new sqlite3.Database('./db/players.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -67,7 +67,7 @@ Bot.on('ready', () => {
 
     });
 
-    switch(args[0]){
+    switch(args[0].toLowerCase()){
       case '?signup':
           msg.guild.members.fetch;
           db.run(`INSERT INTO listing(name, id) VALUES(?, ?)`, [msg.author.username, msg.author.id],  function(err) {
@@ -126,19 +126,6 @@ Bot.on('ready', () => {
 
 
           db.close();
-      break;
-      case '?Interested' :
-        msg.guild.members.fetch;
-        member.addRole(prospect).catch(console.error);
-        msg.channel.send('You now have the prospect role')
-        console.log(member + msg.author.username + ' prospect added');
-
-      break;
-      case '?Uninterested' :
-      msg.guild.members.fetch;
-      member.removeRole(prospect).catch(console.error);
-        msg.channel.send('You no longer have the prospect role')
-        console.log(member + msg.author.username + ' prospect removed');
       break;
       case '?interested' :
         msg.guild.members.fetch;
